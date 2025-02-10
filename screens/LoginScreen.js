@@ -11,13 +11,17 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       const data = await login(email, password);
-      // Stocker le token et rediriger vers l'application principale
-      await storeToken(data.token);
-      navigation.replace('Home'); // Remplacer la pile de navigation pour éviter le retour en arrière
+      if (data.token) {  
+        await storeToken(data.token);
+        navigation.replace('Home');
+      } else {
+        Alert.alert('Erreur', 'Échec de la connexion, aucun token reçu.');
+      }
     } catch (error) {
       Alert.alert('Erreur', error.message || 'Erreur lors de la connexion');
     }
   };
+  
 
   return (
     <View style={styles.container}>

@@ -17,7 +17,7 @@ const users = [
 export const login = async (email, password) => {
     const user = users.find((user) => user.email === email && user.password === password);
     if (user) {
-        return user;
+        return { token: `fake-token-${user.id}`, user };
     } else {
         throw new Error('Invalid credentials');
     }
